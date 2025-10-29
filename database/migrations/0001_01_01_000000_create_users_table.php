@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('type', 30)->default('Admin');
             $table->string('status', 30)->default(\App\Models\User::STATUS_ACTIVE);
             $table->string('avatar')->nullable();
+             $table->timestamp('last_activity_at')->nullable();
             $table->rememberToken();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
