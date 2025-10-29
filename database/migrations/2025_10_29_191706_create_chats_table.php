@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('guest_id')->constrained()->onDelete('cascade');
             $table->foreignId('agent_id')->nullable()->constrained('users')->onDelete('set null');
             $table->boolean('auto_reply_enabled')->default(true);
-            $table->enum('status', ['open', 'assigned', 'closed'])->default('open');
+            $table->enum('status', ['open', 'closed'])->default('open');
             $table->timestamp('last_activity_at')->nullable();
             $table->timestamps();
         });
