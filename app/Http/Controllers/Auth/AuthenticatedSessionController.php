@@ -34,8 +34,9 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
         // Check if the authenticated user is an admin
-        if (auth()->user()->type !== User::TYPE_ADMIN) {
-            auth()->logout();
+        if (!in_array(Auth::user()->type, [User::TYPE_ADMIN, User::TYPE_AGENT])) {
+
+            Auth::guard('web')->logout();
             $request->session()->invalidate();
             $request->session()->regenerateToken();
 
