@@ -50,6 +50,27 @@
                     </a>
                 </li>
                 @endcan
+                @can('List Auto Reply Rules')
+                    @php
+                        $label = __('Auto Reply Rules');
+                        $icon = 'fas fa-user-tie';
+                        $lower = strtolower($label);
+                        if (strpos($lower, 'reply') !== false) {
+                            $icon = 'fas fa-reply';
+                        } elseif (strpos($lower, 'auto') !== false) {
+                            $icon = 'fas fa-robot';
+                        } elseif (strpos($lower, 'rule') !== false || strpos($lower, 'rules') !== false) {
+                            $icon = 'fas fa-gavel';
+                        }
+                    @endphp
+
+                    <li>
+                        <a href="{{ route('auto-reply-rules.index') }}" class="waves-effect {{ Route::is('auto-reply-rules.index') ? 'active' : '' }}">
+                            <i class="{{ $icon }}"></i>
+                            <span>{{ $label }}</span>
+                        </a>
+                    </li>
+                @endcan
 
                 {{-- @can('List User')
 

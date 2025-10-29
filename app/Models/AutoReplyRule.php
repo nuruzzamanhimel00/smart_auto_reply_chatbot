@@ -6,5 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class AutoReplyRule extends Model
 {
-    //
+    protected $guarded = ['id'];
+
 }

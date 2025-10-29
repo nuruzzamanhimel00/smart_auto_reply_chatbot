@@ -6,13 +6,14 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 
+use App\Http\Controllers\Admin\AgentController;
+
 use App\Http\Controllers\Admin\SettingController;
 
 use App\Http\Controllers\Admin\DashboardController;
 
-use App\Http\Controllers\Admin\AgentController;
-
 use App\Http\Controllers\Admin\AdministrationController;
+use App\Http\Controllers\Admin\AutoReplyRulesController;
 
 
 /*
@@ -39,6 +40,7 @@ Route::middleware(['auth', 'verified'])->group(function (){
 
 
     Route::resource('agents',AgentController::class);
+    Route::resource('auto-reply-rules',AutoReplyRulesController::class);
 
     Route::resource('users',UserController::class);
     Route::get('user-orders/{user}', [UserController::class, 'userOrders'])->name('user.orders');

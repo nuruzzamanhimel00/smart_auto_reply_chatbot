@@ -41,6 +41,13 @@ class PermissionSeeder extends Seeder
                 'List Agent',
                 'Delete Agent'
             ],
+            'Auto Reply Rules' => [
+                'Add Auto Reply Rules',
+                'Edit Auto Reply Rules',
+                'Show Auto Reply Rules',
+                'List Auto Reply Rules',
+                'Delete Auto Reply Rules'
+            ],
             'Chat' => [
                 'List Chat',
                 'Assign Chat',

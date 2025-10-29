@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('keyword');
             $table->text('reply');
-            $table->enum('status', ['Active', 'Inactive'])->default('Active');
+            $table->enum('status', [STATUS_ACTIVE, STATUS_INACTIVE])->default(STATUS_ACTIVE);
             $table->integer('priority')->default(0);
             $table->timestamps();
         });
