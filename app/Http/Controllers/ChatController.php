@@ -7,6 +7,7 @@ use App\Models\Guest;
 use App\Models\Message;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Events\MessageReceived;
 
 class ChatController extends Controller
 {
@@ -68,7 +69,7 @@ class ChatController extends Controller
         $guest->update(['last_seen_at' => now()]);
 
         // Trigger event
-        // event(new MessageReceived($message));
+        event(new MessageReceived($message));
 
         return response()->json([
             'success' => true,
