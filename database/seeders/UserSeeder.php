@@ -28,7 +28,7 @@ class UserSeeder extends Seeder
             'email_verified_at'     => now(),
             'password'              => \Illuminate\Support\Facades\Hash::make('12345678'),
             'status'                => User::STATUS_ACTIVE,
-            'type'                  => 'Admin',
+            'type'                  => User::TYPE_ADMIN,
             'remember_token'        => Str::random(10),
         ]);
 
@@ -43,7 +43,7 @@ class UserSeeder extends Seeder
             'email_verified_at'     => now(),
             'password'              => \Illuminate\Support\Facades\Hash::make('12345678'),
             'status'                => User::STATUS_ACTIVE,
-            'type'                  => 'Agent',
+            'type'                  => User::TYPE_AGENT,
             'remember_token'        => Str::random(10),
         ]);
 

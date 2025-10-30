@@ -26,8 +26,8 @@ class User extends Authenticatable implements MustVerifyEmail
     public const FILE_STORE_PATH    = 'users';
 
 
-    public const TYPE_AGENT       = 'Agent';
-    public const TYPE_ADMIN         = 'Admin';
+    public const TYPE_AGENT       = 'agent';
+    public const TYPE_ADMIN         = 'admin';
 
     public const TYPES              = [
         self::TYPE_AGENT,
@@ -100,6 +100,23 @@ class User extends Authenticatable implements MustVerifyEmail
     public function user_verify(){
         return $this->hasOne(UserVerify::class);
     }
+
+
+    public function chats()
+    {
+        return $this->hasMany(Chat::class, 'agent_id','id');
+    }
+
+    public function isAdmin()
+    {
+        return $this->type === self::TYPE_ADMIN;
+    }
+
+    public function isAgent()
+    {
+        return $this->type === self::TYPE_AGENT;
+    }
+
 
 
 }

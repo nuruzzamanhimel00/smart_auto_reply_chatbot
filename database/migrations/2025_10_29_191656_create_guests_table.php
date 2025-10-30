@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('guests', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->nullable();
             $table->string('session_id')->unique();
             $table->string('ip_address')->nullable();
             $table->timestamp('last_seen_at')->nullable();
