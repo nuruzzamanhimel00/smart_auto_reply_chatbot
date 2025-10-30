@@ -3,15 +3,17 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\ChatController;
+use App\Http\Controllers\HomepageController;
+
 use App\Http\Controllers\Admin\RoleController;
+
 use App\Http\Controllers\Admin\UserController;
 
 use App\Http\Controllers\Admin\AgentController;
 
 use App\Http\Controllers\Admin\SettingController;
-
 use App\Http\Controllers\Admin\DashboardController;
-
 use App\Http\Controllers\Admin\AdministrationController;
 use App\Http\Controllers\Admin\AutoReplyRulesController;
 
@@ -27,11 +29,16 @@ use App\Http\Controllers\Admin\AutoReplyRulesController;
 |
 */
 
-//Route::get('/', function () {
-//    return view('welcome');
-//});
 
-Route::redirect('/', 'login');
+// Route::redirect('/', 'login');
+
+//=============================== Guest Routes =============================//
+Route::get('/',[HomepageController::class,'index'] )->name('dashboard');
+
+// ============================== Chart Routes ============================ //
+Route::get('/chat',[ChatController::class,'index'] )->name('chat');
+
+//=============================== Authenticated Routes =============================//
 
 Route::middleware(['auth', 'verified'])->group(function (){
     Route::get('/dashboard',[DashboardController::class,'index'] )->name('dashboard');
