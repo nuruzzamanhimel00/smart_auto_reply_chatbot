@@ -10,7 +10,7 @@
                     efficiently</p>
             </div>
             <div>
-                <a href="/chat" class="btn btn-info btn-lg px-4 shadow-sm">
+                <a href="/need-help" class="btn btn-info btn-lg px-4 shadow-sm">
                     <i class="fas fa-question-circle me-2"></i>Need Help
                 </a>
             </div>

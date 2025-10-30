@@ -36,7 +36,13 @@ use App\Http\Controllers\Admin\AutoReplyRulesController;
 Route::get('/',[HomepageController::class,'index'] )->name('dashboard');
 
 // ============================== Chart Routes ============================ //
-Route::get('/chat',[ChatController::class,'index'] )->name('chat');
+// Route::get('/chat',[ChatController::class,'index'] )->name('chat');
+Route::prefix('chat')->name('guest.')->group(function () {
+    Route::get('/need-help', [ChatController::class, 'createChat'])->name('need-help');
+    Route::get('/{uuid}', [ChatController::class, 'chatBox'])->name('chatBox');
+    Route::get('/{chat_id}/messages', [ChatController::class, 'getMessages'])->name('messages');
+    Route::post('/send-message', [ChatController::class, 'sendMessage'])->name('send');
+});
 
 //=============================== Authenticated Routes =============================//
 
