@@ -27,8 +27,8 @@ class ChatController extends Controller
 
     public function chatBox($uuid)
     {
-        // $guest = $this->getOrCreateGuest($request);
-        // $chat = Chat::where('uuid', $uuid)->firstOrFail();
+        setPageMeta('Chat Box');
+
         $chat = Chat::where('uuid', $uuid)
         ->with(['guest'])
         ->firstOrFail();
