@@ -47,7 +47,9 @@ class ChatController extends Controller
             'guest_id' => 'required|exists:guests,id',
         ]);
 
-        $guest = Guest::where('id', $request->guest_id)->firstOrFail();
+        $guest = Guest::where('id', $request->guest_id)
+        ->with(['activeChat'])
+        ->firstOrFail();
         $chat = $guest->activeChat;
 
         if (!$chat) {
