@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AdministrationController;
 use App\Http\Controllers\Admin\AutoReplyRulesController;
+use App\Http\Controllers\Admin\ChatManagementController;
 
 
 /*
@@ -54,6 +55,15 @@ Route::middleware(['auth', 'verified'])->group(function (){
 
     Route::resource('agents',AgentController::class);
     Route::resource('auto-reply-rules',AutoReplyRulesController::class);
+
+    // Chat Management
+    Route::resource('chat-management',ChatManagementController::class);
+    Route::get('/chats/{uuid}/assign', [ChatManagementController::class, 'assignAgent'])->name('chats.assign');
+    Route::post('/chats/{uuid}/assign', [ChatManagementController::class, 'assignAgentStore'])->name('chats.assign.store');
+    Route::get('/chats/{uuid}/unassign', [ChatManagementController::class, 'unassignAgent'])->name('chats.unassign');
+    Route::get('/chats/{uuid}/toggle-auto-reply', [ChatManagementController::class, 'toggleAutoReply'])->name('chats.toggle-auto-reply');
+    Route::get('/chats/{uuid}/close', [ChatManagementController::class, 'closeChat'])->name('chats.close');
+    Route::get('/admin-chats/{uuid}', [ChatManagementController::class, 'chatBox'])->name('admin.chats.chatBox');
 
     Route::resource('users',UserController::class);
     Route::get('user-orders/{user}', [UserController::class, 'userOrders'])->name('user.orders');

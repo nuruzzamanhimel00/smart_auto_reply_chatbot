@@ -71,6 +71,25 @@
                         </a>
                     </li>
                 @endcan
+                @can('List Chat Management')
+                    @php
+                        $label = __('Chat Management');
+                        $icon = 'fas fa-user-tie';
+                        $lower = strtolower($label);
+                        if (strpos($lower, 'chat') !== false) {
+                            $icon = 'fas fa-comments';
+                        } elseif (strpos($lower, 'manage') !== false || strpos($lower, 'management') !== false) {
+                            $icon = 'fas fa-tasks';
+                        }
+                    @endphp
+
+                    <li>
+                        <a href="{{ route('chat-management.index') }}" class="waves-effect {{ Route::is('chat-management.index') ? 'active' : '' }}">
+                            <i class="{{ $icon }}"></i>
+                            <span>{{ $label }}</span>
+                        </a>
+                    </li>
+                @endcan
 
                 {{-- @can('List User')
 

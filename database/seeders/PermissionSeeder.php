@@ -48,10 +48,13 @@ class PermissionSeeder extends Seeder
                 'List Auto Reply Rules',
                 'Delete Auto Reply Rules'
             ],
-            'Chat' => [
-                'List Chat',
-                'Assign Chat',
-                'Show Chat',
+            'Chat Management' => [
+                'List Chat Management',
+                'Show Chat Management',
+                'Assign Chat Management',
+                'Unassign Chat Management',
+                'Toggle Auto Reply Chat Management',
+                'Close Chat Management',
             ],
 
             'Settings' => [

@@ -137,6 +137,7 @@ class BulkSelect {
 })(jQuery);
 
 function makeDeleteRequest(event, id) {
+    console.log('makeDeleteRequest')
     event.preventDefault();
     Swal.fire({
         title: 'Are you sure?',
