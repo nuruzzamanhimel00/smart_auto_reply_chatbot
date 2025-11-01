@@ -66,10 +66,14 @@ To set up this project locally, follow these steps:
     ```bash
     php artisan key:generate
     ```
+7. Generate an storage:link:
 
-7. Configure your database settings in the `.env` file.
+    ```bash
+    php artisan storage:link
+    ```
+8. Configure your database settings in the `.env` file.
 
-8. Run database migrations:
+9. Run database migrations:
 
     ```bash
     php artisan migrate:fresh --seed
@@ -95,18 +99,33 @@ To set up this project locally, follow these steps:
     ```bash
     php artisan queue:listen
     ```
-12. Start the Reverb:
+13. Start the Reverb:
 
     ```bash
     php artisan reverb:start
     ```
-12. Run the Scheduler:
+14. Run the Scheduler:
 
     ```bash
     php artisan schedule:run
     ```
 
-12. Visit `http://localhost:8000` in your browser to see the application.
+15. Visit `http://localhost:8000` in your browser to see the application.
+
+
+16. Admin Login:
+
+    ```bash
+    email: admin@app.com
+    password: 12345678
+    ```
+
+17. Agent Login:
+
+```bash
+email: agent@app.com
+password: 12345678
+```
 
 ## Usage
 
