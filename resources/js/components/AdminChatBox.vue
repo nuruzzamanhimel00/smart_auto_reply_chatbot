@@ -139,8 +139,20 @@ export default {
     },
     mounted() {
         this.fetchMessages();
+          this.listenForMessages();
     },
     methods:{
+          listenForMessages() {
+            window.Echo.channel(`chat.${this.chat_id}`)
+                .listen(".message.sent", (e) => {
+                    let find = this.messages.find(msg => msg.id === e.id);
+                    if(find) return;
+                    this.messages.push(e);
+
+                    this.scrollToBottom();
+                });
+
+            },
          scrollToBottom() {
             const messagesContainer = this.$refs.messagesContainer;
             if (messagesContainer) {
