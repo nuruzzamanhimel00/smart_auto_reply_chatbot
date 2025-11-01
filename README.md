@@ -83,6 +83,8 @@ To set up this project locally, follow these steps:
 10. Compile front-end assets:
 
     ```bash
+    bun run dev
+    # or
     npm run dev
     # or
     yarn dev
