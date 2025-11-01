@@ -106,7 +106,7 @@
                     </div> -->
                 </div>
 
-                <div class="chat-footer">
+                <div class="chat-footer" v-if="this.chat?.status == 'open'">
                     <div class="chat-input-wrapper">
                         <div class="input-group-custom">
 
