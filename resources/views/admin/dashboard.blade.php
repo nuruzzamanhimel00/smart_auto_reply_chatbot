@@ -1,150 +1,234 @@
 @extends('admin.layouts.app')
 
+
 @section('content')
-<div class="container-fluid">
-
-    <div class="row">
-        <div class="col-xl-3 col-md-6">
-            <div class="card dashboard-card mini-stat ic-bg-dashboard-card text-white h-90">
-                <div class="card-body">
-                    <div class="mb-4">
-                        <div class="float-start mini-stat-img me-2">
-                            <i class="fa fa-users bx-fade-right fa-2x pt-3"></i>
-                        </div>
-                        <h5 class="font-size-16 text-uppercase text-white-50">{{ __('Total Customer') }}</h5>
-                        <h4 class="fw-medium font-size-24">0
-                        </h4>
-                    </div>
-                    <div class="pt-2">
-                        <div class="float-end">
-                            <a href="#" class="text-white-50"><i
-                                    class="mdi mdi-arrow-right h5"></i></a>
-                        </div>
-
-                        <p class="text-white-50 mb-0 mt-1">{{ __('Total Home Customers') }}</p>
-                    </div>
-                </div>
-            </div>
+<div class="container-fluid py-4">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col">
+            <h2 class="fw-bold mb-0">
+                <i class="bi bi-speedometer2 me-2"></i>Chat Management Dashboard
+            </h2>
+            <p class="text-muted">
+                <i class="bi bi-eye me-1"></i>Monitor and manage all chat conversations
+            </p>
         </div>
-        <div class="col-xl-3 col-md-6">
-            <div class="card dashboard-card mini-stat bg-blue-grey text-white h-90">
-                <div class="card-body">
-                    <div class="mb-4">
-                        <div class="float-start mini-stat-img me-2">
-                            <i class="fa fa-list bx-fade-right fa-2x pt-3"></i>
-                        </div>
-                        <h5 class="font-size-16 text-uppercase text-white-50">{{ __('Total Restaurants') }}</h5>
-                        <h4 class="fw-medium font-size-24">0
-                        </h4>
-                    </div>
-                    <div class="pt-2">
-                        <div class="float-end">
-                            <a href="#" class="text-white-50"><i
-                                    class="mdi mdi-arrow-right h5"></i></a>
-                        </div>
+    </div>
 
-                        <p class="text-white-50 mb-0 mt-1">{{ __('Restaurants In Application') }}</p>
+    <!-- Stats Cards -->
+    <div class="row g-4 mb-4">
+        <div class="col-md-6 col-lg-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <p class="text-muted mb-1 small">
+                                <i class="bi bi-chat-dots-fill me-1"></i>Total Chats
+                            </p>
+                            <h3 class="fw-bold mb-0">{{ number_format($stats['total_chats']) }}</h3>
+                        </div>
+                        <div class="bg-primary bg-opacity-10 p-3 rounded">
+                            <i class="bi bi-chat-dots fs-4 text-primary"></i>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
+        <div class="col-md-6 col-lg-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <p class="text-muted mb-1 small">
+                                <i class="bi bi-chat-left-text-fill me-1"></i>Open Chats
+                            </p>
+                            <h3 class="fw-bold mb-0">{{ number_format($stats['open_chats']) }}</h3>
+                        </div>
+                        <div class="bg-warning bg-opacity-10 p-3 rounded">
+                            <i class="bi bi-chat-left-text fs-4 text-warning"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <p class="text-muted mb-1 small">
+                                <i class="bi bi-check-circle-fill me-1"></i>Assigned Chats
+                            </p>
+                            <h3 class="fw-bold mb-0">{{ number_format($stats['assigned_chats']) }}</h3>
+                        </div>
+                        <div class="bg-success bg-opacity-10 p-3 rounded">
+                            <i class="bi bi-check-circle fs-4 text-success"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <p class="text-muted mb-1 small">
+                                <i class="bi bi-people-fill me-1"></i>Active Agents
+                            </p>
+                            <h3 class="fw-bold mb-0">{{ number_format($stats['active_agents']) }}</h3>
+                        </div>
+                        <div class="bg-info bg-opacity-10 p-3 rounded">
+                            <i class="bi bi-people fs-4 text-info"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 
 
+    <!-- Chats Table -->
+    <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white border-bottom py-3">
+            <h5 class="mb-0 fw-bold">
+                <i class="bi bi-clock-history me-2"></i>Recent Conversations
+            </h5>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead class="bg-light">
+                        <tr>
+                            <th class="border-0 px-4 py-3">
+                                <i class="bi bi-person-circle me-1"></i>Guest
+                            </th>
+                            <th class="border-0 py-3">
+                                <i class="bi bi-info-circle me-1"></i>Status
+                            </th>
+                            <th class="border-0 py-3">
+                                <i class="bi bi-person-badge me-1"></i>Assigned Agent
+                            </th>
+                            <th class="border-0 py-3">
+                                <i class="bi bi-chat-square-text me-1"></i>Latest Message
+                            </th>
+                            <th class="border-0 py-3">
+                                <i class="bi bi-clock me-1"></i>Last Activity
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($chats as $chat)
+                        <tr>
+                            <td class="px-4 py-3">
+                                <div class="d-flex align-items-center">
+                                    <div class="bg-primary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                                        <span class="fw-bold text-primary">{{ strtoupper(substr($chat->guest->name ?? 'G', 0, 1)) }}</span>
+                                    </div>
+                                    <div>
+                                        <div class="fw-semibold">
+                                            <i class="bi bi-person-fill text-muted me-1" style="font-size: 0.85rem;"></i>
+                                            {{ $chat->guest->name ?? 'Guest' }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="py-3">
+                                @if($chat->status === 'open')
+                                    <span class="badge bg-warning text-dark">
+                                        <i class="bi bi-unlock-fill me-1"></i>Open
+                                    </span>
+                                @else
+                                    <span class="badge bg-secondary">
+                                        <i class="bi bi-lock-fill me-1"></i>Closed
+                                    </span>
+                                @endif
+                            </td>
+                            <td class="py-3">
+                                @if($chat->agent)
+                                    <div class="d-flex align-items-center">
+                                        <div class="bg-success bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 30px; height: 30px;">
+                                            <span class="small fw-bold text-success">{{ strtoupper(substr($chat->agent->name, 0, 1)) }}</span>
+                                        </div>
+                                        <span class="small">
+                                            <i class="bi bi-person-check-fill text-success me-1" style="font-size: 0.75rem;"></i>
+                                            {{ $chat->agent->first_name }}
+                                        </span>
+                                    </div>
+                                @else
+                                    <span class="text-muted small">
+                                        <i class="bi bi-person-x me-1"></i>Unassigned
+                                    </span>
+                                @endif
+                            </td>
+                            <td class="py-3">
+                                <div class="text-truncate" style="max-width: 250px;">
+                                    @if($chat->latestMessage)
+                                        <small class="text-muted">
+                                            <i class="bi bi-chat-right-quote me-1"></i>
+                                            {{ Str::limit($chat->latestMessage->content, 50) }}
+                                        </small>
+                                    @else
+                                        <small class="text-muted fst-italic">
+                                            <i class="bi bi-inbox me-1"></i>No messages yet
+                                        </small>
+                                    @endif
+                                </div>
+                            </td>
+                            <td class="py-3">
+                                <small class="text-muted">
+                                    <i class="bi bi-calendar-event me-1"></i>
+                                    {{ $chat->last_activity_at->diffForHumans() }}
+                                </small>
+                            </td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="5" class="text-center py-5">
+                                <div class="text-muted">
+                                    <i class="bi bi-chat-dots fs-1 d-block mb-3"></i>
+                                    <p><i class="bi bi-exclamation-circle me-1"></i>No chats found</p>
+                                </div>
+                            </td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        @if($chats->hasPages())
+        <div class="card-footer bg-white border-top">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="text-muted small">
+                    <i class="bi bi-file-text me-1"></i>
+                    Showing {{ $chats->firstItem() }} to {{ $chats->lastItem() }} of {{ $chats->total() }} results
+                </div>
+                <div>
+                    {{ $chats->links() }}
+                </div>
+            </div>
+        </div>
+        @endif
+    </div>
 </div>
 
 @endsection
-@push('style')
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+@push('styles')
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 <style>
-.dashboard-card {
-    border-radius: 1rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-}
-
-.dashboard-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-}
-
-.stat-icon {
-    font-size: 2rem;
-    width: 4rem;
-    height: 4rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-}
-
-.date-filter {
-    background-color: #fff;
-    border-radius: 0.5rem;
-    padding: 1rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-.table-responsive {
-    border-radius: 0.5rem;
-    /* overflow: hidden; */
-}
-
-.status-badge {
-    padding: 0.35rem 0.75rem;
-    border-radius: 2rem;
-    font-size: 0.85rem;
-    font-weight: 500;
-}
-
-.chart-container {
-    position: relative;
-    margin-bottom: 2rem;
-    height: 300px;
-    width: 100%;
-}
-
-.chart-loading {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: rgba(255, 255, 255, 0.7);
-    z-index: 10;
-}
-
-.chart-error {
-    padding: 1rem;
-    color: #721c24;
-    background-color: #f8d7da;
-    border: 1px solid #f5c6cb;
-    border-radius: 0.25rem;
-    margin-bottom: 1rem;
-}
-
-.bg-gradient-primary {
-    background: linear-gradient(45deg, #6a82fb, #fc5c7d) !important;
-}
-
-.bg-gradient-info {
-    background: linear-gradient(45deg, #00c6ff, #0072ff) !important;
-}
-
-.bg-gradient-success {
-    background: linear-gradient(45deg, #00b09b, #96c93d) !important;
-}
-
-.bg-gradient-warning {
-    background: linear-gradient(45deg, #ff758c, #ff7eb3) !important;
-}
+    .table > :not(caption) > * > * {
+        padding: 1rem 0.75rem;
+    }
+    .btn-group-sm > .btn {
+        padding: 0.25rem 0.5rem;
+    }
+    .table thead th i {
+        opacity: 0.7;
+    }
 </style>
-@endpush
-@push('script')
-
 @endpush
