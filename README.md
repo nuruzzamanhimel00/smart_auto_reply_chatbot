@@ -1,8 +1,9 @@
-# Grozaa
+# SMART AUTO REPLY CHATBOT
 
-Grozaar Web Application
 
 ## Description
+
+A Smart Auto Reply Chatbot designed to automate responses in real-time conversations. Built with Laravel and Vue.js, this project provides a robust foundation for developing intelligent chatbots that can understand user queries and deliver instant, context-aware replies. Ideal for customer support, FAQs, and interactive web applications.
 
 This is a Laravel Vue.js project starter. It has some basic setup for your new projects startup. It's help full for every new project starter.
 
@@ -23,13 +24,14 @@ To set up this project locally, follow these steps:
 1. Clone the repository:
 
     ```bash
-    git clone git@github.com:zahidhassanshaikot/laravel-vue-product-starter.git
+    git clone https://github.com/nuruzzamanhimel00/smart_auto_reply_chatbot.git
     ```
 
 2. Navigate into the project directory:
 
     ```bash
-    cd laravel-vue-product-starter
+    cd smart_auto_reply_chatbot
+
     ```
 
 3. Install PHP dependencies using Composer:
@@ -70,18 +72,9 @@ To set up this project locally, follow these steps:
 8. Run database migrations:
 
     ```bash
-    php artisan migrate
+    php artisan migrate:fresh --seed
     ```
 
-9. Setup passport:
-
-    ```bash
-    php artisan passport:keys
-    ```
-
-    ```bash
-    php artisan passport:client --personal --name="laravel-vue-product-starter"
-    ```
 
 10. Compile front-end assets:
 
@@ -97,6 +90,22 @@ To set up this project locally, follow these steps:
     php artisan serve
     ```
 
+12. Start the Queue Listen:
+
+    ```bash
+    php artisan queue:listen
+    ```
+12. Start the Reverb:
+
+    ```bash
+    php artisan reverb:start
+    ```
+12. Run the Scheduler:
+
+    ```bash
+    php artisan schedule:run
+    ```
+
 12. Visit `http://localhost:8000` in your browser to see the application.
 
 ## Usage
@@ -105,7 +114,7 @@ Provide instructions on how to use your application here. Include any necessary 
 
 ## Authors of this repo
 
-### Regards  [Zahid Hassan Shaikot](https://github.com/zahidhassanshaikot/)
+### Regards  [Md Nuruzzaman](https://github.com/nuruzzamanhimel00)
 
 ## Contributors
-[Zahid Hassan Shaikot](https://github.com/zahidhassanshaikot/), [A Awal Hadi](https://github.com/awalhadi)
+[Md Nuruzzaman](https://github.com/nuruzzamanhimel00)
