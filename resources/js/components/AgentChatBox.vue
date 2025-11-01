@@ -22,88 +22,50 @@
                 <div class="chat-body"  ref="messagesContainer">
 
 
-                    <!-- User Message -->
-                    <!-- <div class="message user">
-                        <div class="message-avatar">
-                            <img src="https://ui-avatars.com/api/?name=John+Doe&background=0D6EFD&color=fff" alt="User">
-                        </div>
-                        <div class="message-content">
-                            <div class="message-header">
-                                <span class="message-name">John Doe</span>
-                                <span class="message-time"><i class="far fa-clock me-1"></i>10:30 AM</span>
-                            </div>
-                            <div class="message-bubble">
-                                Hello! I need help with my account setup. Can you assist me?
-                            </div>
-                        </div>
-                    </div> -->
 
-                    <!-- Admin Message -->
-                    <!-- <div class="message admin">
-                        <div class="message-content">
-                            <div class="message-header">
-                                <span class="message-time"><i class="far fa-clock me-1"></i>10:31 AM</span>
-                                <span class="message-name">Admin Support</span>
-                            </div>
-                            <div class="message-bubble">
-                                Hello John! Of course, I'd be happy to help you with your account setup. What specific issue
-                                are you facing?
-                            </div>
-                        </div>
-                        <div class="message-avatar">
-                            <img src="https://ui-avatars.com/api/?name=Admin+Support&background=198754&color=fff"
-                                alt="Admin">
-                        </div>
-                    </div> -->
-
-                    <div v-for="(message, index) in messages" :key="index" class="message" :class="message.sender_type === 'guest' ? 'admin' : 'user'">
-                        <!-- for Guest User Message -->
-                        <div class="message-content" v-if="message.sender_type == 'guest'">
-                            <div class="message-header">
-                                <span class="message-time"><i class="far fa-clock me-1"></i>{{ formatTime(message.created_at) }}</span>
-                                <span class="message-name">{{  'You' }}</span>
-                            </div>
-                            <div class="message-bubble">
-                                {{ message.content }}
-                            </div>
-                        </div>
-                        <div class="message-avatar" v-if="message.sender_type == 'guest'">
-                            <img :src="`https://ui-avatars.com/api/?name=${encodeURIComponent(message?.senderable?.name || 'Guest')}&background=198754&color=fff`"
-                                alt="Guest">
-                        </div>
-
-                        <!-- for system and admin user message -->
-                        <div class="message-avatar"  v-if="message.sender_type != 'guest'">
-                            <img  v-if="message.senderable == null" :src="`https://ui-avatars.com/api/?name=${encodeURIComponent(message?.senderable?.name || 'Admin')}&background=0D6EFD&color=fff`" alt="Admin">
-                            <img  v-else  :src="message.senderable.avatar_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(message.senderable.first_name || 'System')}&background=198754&color=fff`"  alt="Admin">
-                        </div>
-                        <div class="message-content" v-if="message.sender_type != 'guest'">
-                            <div class="message-header">
-                                <span class="message-name">{{ message?.senderable?.first_name || 'Admin Support' }}</span>
-                                <span class="message-time"><i class="far fa-clock me-1"></i>{{ formatTime(message.created_at) }}</span>
-                            </div>
-                            <div class="message-bubble">
-                                {{ message.content }}
-                            </div>
-                        </div>
+                    <div v-for="(message, index) in messages" :key="index" class="message"
+                        :class="{
+                           admin: ['system', 'agent'].includes(message.sender_type),
+                           user: message.sender_type === 'guest'
+                        }">
+                        <!-- Guest Message (Left Side) -->
+                        <template v-if="message.sender_type === 'guest'">
+                           <div class="message-avatar">
+                              <img :src="`https://ui-avatars.com/api/?name=${message?.senderable?.name}&background=0D6EFD&color=fff`" alt="Guest">
+                           </div>
+                           <div class="message-content">
+                              <div class="message-header">
+                                 <span class="message-name">{{ message?.senderable?.name }}</span>
+                                 <span class="message-time"><i class="far fa-clock me-1"></i>{{ formatTime(message.created_at) }}</span>
+                              </div>
+                              <div class="message-bubble">
+                                 {{ message.content }}
+                              </div>
+                           </div>
+                        </template>
+                        <!-- Agent/System Message (Right Side) -->
+                        <template v-else>
+                           <div class="message-content">
+                              <div class="message-header">
+                                 <span class="message-time"><i class="far fa-clock me-1"></i>{{ formatTime(message.created_at) }}</span>
+                                 <span class="message-name">{{ message.senderable == null ? 'System' : message.senderable.first_name }}</span>
+                              </div>
+                              <div class="message-bubble">
+                                 {{ message.content }}
+                              </div>
+                           </div>
+                           <div class="message-avatar">
+                              <img v-if="message.senderable == null"
+                                 :src="`https://ui-avatars.com/api/?name=System&background=198754&color=fff`"
+                                 alt="System">
+                              <img v-else
+                                 :src="message.senderable.avatar_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(message.senderable.first_name || 'System')}&background=198754&color=fff`"
+                                 alt="Agent">
+                           </div>
+                        </template>
                     </div>
 
 
-
-                    <!-- Typing Indicator -->
-                    <!-- <div class="message user typing-indicator">
-                        <div class="message-avatar">
-                            <img src="https://ui-avatars.com/api/?name=John+Doe&background=0D6EFD&color=fff"
-                                alt="User">
-                        </div>
-                        <div class="message-content">
-                            <div class="message-bubble">
-                                <span class="typing-dot"></span>
-                                <span class="typing-dot"></span>
-                                <span class="typing-dot"></span>
-                            </div>
-                        </div>
-                    </div> -->
                 </div>
 
                 <div class="chat-footer">
@@ -142,6 +104,7 @@ export default {
             isFriendTypingTimer:null,
             isUserOnline: false,
             isSending: false,
+            agent_id:this.chat?.agent_id
         };
     },
     watch: {
@@ -186,9 +149,10 @@ export default {
             this.isSending = true;
             const messageData = {
                 message: this.newMessage.trim(),
-                guest_id: this.chat.guest_id
+                agent_id: this.chat.agent_id,
+                chat_id: this.chat_id
             };
-            axios.post('/chat/send-message', messageData)
+            axios.post('/agent/chats/send-message', messageData)
             .then(response => {
                 this.messages.push(response?.data?.message);
                 this.newMessage = '';

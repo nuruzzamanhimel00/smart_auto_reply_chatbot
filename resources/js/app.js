@@ -10,6 +10,7 @@ import { getTrans } from "@/helpers";
 
 import GuestChatBox from "./components/GuestChatBox.vue";
 import AdminChatBox from "./components/AdminChatBox.vue";
+import AgentChatBox from "./components/AgentChatBox.vue";
 
 
 
@@ -41,6 +42,7 @@ Object.entries(import.meta.glob("./**/*.vue", { eager: true })).forEach(
 
 app.component("guest-chat-box", GuestChatBox);
 app.component("admin-chat-box", AdminChatBox);
+app.component("agent-chat-box", AgentChatBox);
 
 app.use(VueSweetalert2);
 app.mount("#vueApp");

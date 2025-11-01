@@ -45,10 +45,12 @@ class ChatManagementController extends Controller
     public static function middleware(): array
     {
         return [
-            new Middleware(PermissionMiddleware::using('List Auto Reply Rules'), only: ['index']),
-            new Middleware(PermissionMiddleware::using('Add Auto Reply Rules'), only: ['create', 'store']),
-            new Middleware(PermissionMiddleware::using('Edit Auto Reply Rules'), only: ['edit', 'update']),
-            new Middleware(PermissionMiddleware::using('Delete Auto Reply Rules'), only: ['destroy']),
+            new Middleware(PermissionMiddleware::using('List Chat Management'), only: ['index']),
+            new Middleware(PermissionMiddleware::using('Assign Chat Management'), only: ['assignAgent']),
+           new Middleware(PermissionMiddleware::using('Unassign Chat Management'), only: ['unassignAgent']),
+           new Middleware(PermissionMiddleware::using('Toggle Auto Reply Chat Management'), only: ['toggleAutoReply']),
+           new Middleware(PermissionMiddleware::using('Close Chat Management'), only: ['closeChat']),
+           new Middleware(PermissionMiddleware::using('Show Chat Management'), only: ['chatBox']),
 
         ];
     }

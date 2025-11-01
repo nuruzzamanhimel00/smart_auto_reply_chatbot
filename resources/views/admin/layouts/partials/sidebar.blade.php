@@ -90,6 +90,24 @@
                         </a>
                     </li>
                 @endcan
+                @if(auth()->user()->isAgent())
+                    @php
+                        $label = __('Chats');
+                        $icon = 'fas fa-user-tie';
+                        $lower = strtolower($label);
+                        if (strpos($lower, 'chat') !== false) {
+                            $icon = 'fas fa-comments';
+                        } elseif (strpos($lower, 'message') !== false) {
+                            $icon = 'fas fa-envelope';
+                        }
+                    @endphp
+                    <li>
+                        <a href="{{ route('agent.chat.index') }}" class="waves-effect {{ Route::is('agent.chat.index') ? 'active' : '' }}">
+                            <i class="{{ $icon }}"></i>
+                            <span>{{ $label }}</span>
+                        </a>
+                    </li>
+                @endif
 
                 {{-- @can('List User')
 

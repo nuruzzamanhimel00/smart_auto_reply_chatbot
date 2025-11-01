@@ -12,7 +12,7 @@ use Yajra\DataTables\Html\Column;
 use Spatie\Permission\Models\Role;
 use Yajra\DataTables\Services\DataTable;
 
-class ChatManagementDataTable extends DataTable
+class AgentChatDataTable extends DataTable
 {
 
     use DataTableTrait;
@@ -45,33 +45,7 @@ class ChatManagementDataTable extends DataTable
             })
             ->addColumn('action', function ($item) {
                 $buttons = '';
-                if (auth()->user()->can('Show Chat Management')) {
-                    $buttons .= '<li><a class="dropdown-item" href="' . route('admin.chats.chatBox', $item->uuid) . '" title="Show"><i class="fa fa-eye"></i> ' . __('Show') . '</a></li>';
-                }
-                if (auth()->user()->can('Assign Chat Management') && $item->status == 'open') {
-                    $buttons .= '<li><a class="dropdown-item" href="' . route('chats.assign', $item->uuid) . '" title="Assign Agent"><i class="fa fa-user-plus"></i> ' . __('Assign Agent') . '</a></li>';
-                }
-                if (auth()->user()->can('Unassign Chat Management') && $item->status == 'open') {
-                    $buttons .= '<li><a class="dropdown-item" href="' . route('chats.unassign', $item->uuid) . '" title="Unassign Agent"><i class="fa fa-user-times"></i> ' . __('Unassign') . '</a></li>';
-                }
-                if (auth()->user()->can('Toggle Auto Reply Chat Management') && $item->status == 'open') {
-                    if ($item->auto_reply_enabled) {
-                        $buttons .= '<li><a class="dropdown-item" href="' . route('chats.toggle-auto-reply', $item->uuid) . '" title="Disable Auto Reply"><i class="fa fa-comment-slash"></i> ' . __('Disable Auto Reply') . '</a></li>';
-                    } else {
-                        $buttons .= '<li><a class="dropdown-item" href="' . route('chats.toggle-auto-reply', $item->uuid) . '" title="Enable Auto Reply"><i class="fa fa-comments"></i> ' . __('Enable Auto Reply') . '</a></li>';
-                    }
-                }
-                if (auth()->user()->can('Close Chat Management') && $item->status == 'open') {
-                   $buttons .= '<li><a class="dropdown-item" href="' . route('chats.close', $item->uuid) . '" title="Close Chat"><i class="fa fa-times"></i> ' . __('Close Chat') . '</a></li>';
-                }
-
-                // if (auth()->user()->can('Delete Auto Reply Rules') ) {
-                //     $buttons .= '<form action="' . route('auto-reply-rules.destroy', $item->id) . '"  id="delete-form-' . $item->id . '" method="post">
-                //     <input type="hidden" name="_token" value="' . csrf_token() . '">
-                //     <input type="hidden" name="_method" value="DELETE">
-                //     <button class="dropdown-item text-danger delete-list-data" onclick="return makeDeleteRequest(event, ' . $item->id . ')" data-from-name="'. $item->name.'" data-from-id="' . $item->id . '"   type="button" title="Delete"><i class="mdi mdi-trash-can-outline"></i> ' . __('Delete') . '</button></form>
-                //     ';
-                // }
+                 $buttons .= '<li><a class="dropdown-item" href="' . route('agent.chat.chatBox', $item->uuid) . '" title="Show"><i class="fa fa-eye"></i> ' . __('Show') . '</a></li>';
 
                 return '<div class="btn-group dropstart">
                               <button class="btn btn-secondary dropdown-toggle"  type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -98,7 +72,8 @@ class ChatManagementDataTable extends DataTable
     public function query(Chat $model)
     {
         return $model->newQuery()
-         ->orderBy('chats.id','desc')
+        ->where('agent_id', auth()->id())
+        ->orderBy('chats.id','desc')
         ->with(['agent', 'guest']);
 
     }

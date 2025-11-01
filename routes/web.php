@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\AgentController;
 
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Agent\AgentChatController;
 use App\Http\Controllers\Admin\AdministrationController;
 use App\Http\Controllers\Admin\AutoReplyRulesController;
 use App\Http\Controllers\Admin\ChatManagementController;
@@ -48,6 +49,7 @@ Route::prefix('chat')->name('guest.')->group(function () {
 //=============================== Authenticated Routes =============================//
 
 Route::middleware(['auth', 'verified'])->group(function (){
+    //================================ Admin Routes ============================//
     Route::get('/dashboard',[DashboardController::class,'index'] )->name('dashboard');
     Route::resource('administrations',AdministrationController::class);
     Route::resource('roles', RoleController::class);
@@ -67,18 +69,15 @@ Route::middleware(['auth', 'verified'])->group(function (){
 
     Route::resource('users',UserController::class);
     Route::get('user-orders/{user}', [UserController::class, 'userOrders'])->name('user.orders');
-
-
     Route::resource('settings', SettingController::class)->only(['index', 'store']);
 
-    Route::post('users/bulk-delete', [UserController::class, 'bulk_destroy'])->name('users.bulk-destroy');
-
-    // Route::get('/notify', function(){
-    //     // dd('dd');
-    //     $notify = auth()->user()->notifications->last();
-    //     broadcast(new OrderNotifyEvent($notify));
-    //     dd($notify);
-    // });
+    //==================================== Agent Routes ============================//
+    Route::prefix('agent/chats')->name('agent.chat.')->group(function () {
+        Route::get('/', [AgentChatController::class, 'index'])->name('index');
+        Route::post('/send-message', [AgentChatController::class, 'sendMessage'])->name('send');
+        Route::get('/{uuid}', [AgentChatController::class, 'chatBox'])->name('chatBox');
+        // Route::get('/{chat_id}/messages', [ChatController::class, 'getMessages'])->name('messages');
+    });
 
 
 
