@@ -9,6 +9,7 @@ use App\Models\Message;
 use Illuminate\Http\Request;
 use App\Events\AgentAssigned;
 use App\Services\RoleService;
+use App\Events\NewMessageSent;
 use App\Services\AgentService;
 use App\Events\AgentUnassigned;
 use App\Services\AutoReplyService;
@@ -107,8 +108,10 @@ class AgentChatController extends Controller
 
         // Update chat activity
         $chat->update(['last_activity_at' => now()]);
-        $agent->update(['last_activity_at' => now()]);
 
+        // Broadcast message
+          // Broadcast the message
+        broadcast(new NewMessageSent($message));
 
         return response()->json([
             'success' => true,

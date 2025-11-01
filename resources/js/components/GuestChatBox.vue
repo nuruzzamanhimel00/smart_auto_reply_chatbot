@@ -156,8 +156,45 @@ export default {
     },
     mounted() {
         this.fetchMessages();
+         this.listenForMessages();
+
+        // Echo.channel(`chat.${this.chat_id}`)
+        // .listen(".message.sent", (response) => {
+        //     // this.messages.push(response.message);
+        //     console.log("New message received via Echo:", response);
+
+        // })
     },
     methods:{
+        listenForMessages() {
+            window.Echo.channel(`chat.${this.chat_id}`)
+                .listen(".message.sent", (e) => {
+                    console.log("New message received via Echo:", e);
+                    let find = this.messages.find(msg => msg.id === e.id);
+                    if(find) return;
+                    this.messages.push(e);
+                    // this.messages.push({
+                    //     id: e.message.id,
+                    //     chat_id: e.message.chat_id,
+                    //     sender_type: e.message.sender_type,
+                    //     content: e.message.content,
+                    //     is_auto_reply: e.message.is_auto_reply,
+                    //     created_at: e.message.created_at,
+                    // });
+                    this.scrollToBottom();
+                });
+                // .listen(".agent.typing", (e) => {
+                // this.isAgentTyping = e.is_typing;
+                // this.agentName = e.agent_name;
+
+                // if (e.is_typing) {
+                //     clearTimeout(this.typingTimeout);
+                //     this.typingTimeout = setTimeout(() => {
+                //     this.isAgentTyping = false;
+                //     }, 3000);
+                // }
+                // });
+            },
           scrollToBottom() {
             const messagesContainer = this.$refs.messagesContainer;
             if (messagesContainer) {
@@ -190,8 +227,11 @@ export default {
             };
             axios.post('/chat/send-message', messageData)
             .then(response => {
-                this.messages.push(response?.data?.message);
                 this.newMessage = '';
+                let find = this.messages.find(msg => msg.id === response?.data?.message.id);
+                if(find) return;
+                this.messages.push(response?.data?.message);
+
             })
             .catch(error => {
                 console.error("Error sending message:", error);

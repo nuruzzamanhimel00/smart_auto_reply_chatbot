@@ -7,6 +7,7 @@ use App\Models\Guest;
 use App\Models\Message;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Events\NewMessageSent;
 use App\Events\MessageReceived;
 
 class ChatController extends Controller
@@ -69,6 +70,9 @@ class ChatController extends Controller
         // Update chat activity
         $chat->update(['last_activity_at' => now()]);
         $guest->update(['last_seen_at' => now()]);
+
+         // Broadcast the message
+        broadcast(new NewMessageSent($message));
 
         // Trigger event
         event(new MessageReceived($message));

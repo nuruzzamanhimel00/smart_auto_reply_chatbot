@@ -27,7 +27,7 @@
         "@vueform/toggle": "^2.1.4",
         "bootstrap": "^5.3.3",
         "jquery": "^3.7.1",
-        "laravel-echo": "^2.0.2",
+        "laravel-echo": "^2.2.4",
         "laravel-vue-i18n": "^2.7.6",
         "pusher-js": "^8.4.0",
         "resumablejs": "^1.1.0",

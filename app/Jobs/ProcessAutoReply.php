@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\Message;
+use App\Events\NewMessageSent;
 use App\Services\AutoReplyService;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -24,7 +25,7 @@ class ProcessAutoReply implements ShouldQueue
         $reply = $autoReplyService->generateReply($this->message->content);
 
         if ($reply) {
-            Message::create([
+            $message = Message::create([
                 'chat_id' => $this->message->chat_id,
                 'sender_type' => 'system',
                 'senderable_type' => null,
@@ -37,6 +38,9 @@ class ProcessAutoReply implements ShouldQueue
             $this->message->chat->update([
                 'last_activity_at' => now()
             ]);
+
+            // Broadcast the auto-reply
+            broadcast(new NewMessageSent($message));
         }
     }
 }
