@@ -115,14 +115,14 @@ To set up this project locally, follow these steps:
 15. Visit `http://localhost:8000` in your browser to see the application.
 
 
-16. Admin Login:
+16. Admin Login :(url: ttp://127.0.0.1:8000/login)
 
     ```bash
     email: admin@app.com
     password: 12345678
     ```
 
-17. Agent Login:
+17. Agent Login: (url: ttp://127.0.0.1:8000/login)
 
 ```bash
 email: agent@app.com
